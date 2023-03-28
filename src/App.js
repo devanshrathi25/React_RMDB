@@ -1,10 +1,16 @@
 import React from 'react';
 import { GlobalStyle } from './GlobalStyle';
 
+//Components
+import Header from "./Components/Header";
+import Home from './Components/Home';
+
 const App = () => {
   return (
     <div className="App">
-      Start here.
+      
+      <Header />
+      <Home />
       <GlobalStyle />
     </div>
   );
