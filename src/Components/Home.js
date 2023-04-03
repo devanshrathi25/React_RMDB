@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 
 //components
 import HeroImage from "./HeroImage";
+import Grid from "./Grid";
+import Thumb from "./Thumb";
 
 //config
 import { IMAGE_BASE_URL, BACKDROP_SIZE, POSTER_SIZE } from "../config";
@@ -25,6 +27,24 @@ const Home = () => {
                 text = {state.results[0].overview}
             />) : null
         }
+
+        <Grid header = "Popular Movies">
+            {state.results.map(movie => 
+                //<div key={movie.id}>{movie.title}</div>
+                <Thumb
+                    key={movie.id} 
+                    image = {
+                        movie.poster_path ? 
+                        IMAGE_BASE_URL + POSTER_SIZE + movie.poster_path :
+                        NoImage
+                    }
+                    clickable
+                    movieId= {movie.id}
+                />
+            )}
+        </Grid>
+        
+            
         </>
     );
 }
