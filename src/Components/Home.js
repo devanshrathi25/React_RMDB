@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 
 //components
 import HeroImage from "./HeroImage";
 import Grid from "./Grid";
 import Thumb from "./Thumb";
+import Spinner from "./Spinner";
+import SearchBar from "./SearchBar";
 
 //config
 import { IMAGE_BASE_URL, BACKDROP_SIZE, POSTER_SIZE } from "../config";
@@ -15,20 +17,21 @@ import NoImage from "../images/no_image.jpg";
 import { useHomeFetch } from "../Hooks/useHomeFetch";
 
 const Home = () => {
-    const {state, loading, error} = useHomeFetch();
+    const {state, loading, error, searchTerm, setSearchTerm} = useHomeFetch();
     console.log(state);
     return (
         <>
         {
-            state.results[0] ? 
+            !searchTerm && state.results[0] ? 
             (<HeroImage 
                 image = {`${IMAGE_BASE_URL}${BACKDROP_SIZE}${state.results[0].backdrop_path}`}
                 title = {state.results[0].title}
                 text = {state.results[0].overview}
             />) : null
         }
-
-        <Grid header = "Popular Movies">
+        <SearchBar setSearchTerm={setSearchTerm} />
+        <Grid header = {searchTerm ? "Search Result" : "Popular Movies"}>
+            
             {state.results.map(movie => 
                 //<div key={movie.id}>{movie.title}</div>
                 <Thumb
@@ -43,7 +46,7 @@ const Home = () => {
                 />
             )}
         </Grid>
-        
+        <Spinner />
             
         </>
     );
